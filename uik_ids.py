@@ -1,6 +1,7 @@
 ﻿from selenium import webdriver
 from re import findall
 from time import sleep
+from pathlib import Path
 
 
 START_URL = 'http://www.ivanovo.vybory.izbirkom.ru/region/ivanovo?action=ik'
@@ -15,7 +16,10 @@ def get_src(url: str) -> str:
         arrow.click()
         sleep(0.5)
 
-    return driver.page_source
+    src = driver.page_source
+    driver.quit()
+
+    return src
 
 
 def parse_ids(url: str = START_URL) -> list:
@@ -28,6 +32,9 @@ if __name__ == '__main__':
 
     ids = parse_ids(START_URL)
 
-    filename = 'uiks_' + strftime('%Y%m%d', localtime()) + '.txt'
+    filename = (Path().cwd() / "out" /
+                'uiks_' + strftime('%Y%m%d', localtime()) + '.txt'
+                )
+
     with open(filename, 'w') as f:
         f.writelines((START_URL + f'%vrn={i}' for i in ids))

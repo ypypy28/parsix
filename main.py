@@ -1,16 +1,17 @@
 ﻿import time
 import csv
-# import os
+from pathlib import Path
 from random import randrange
-from Uik_obj import Uik_obj
+from uik_obj import Uik_obj
+from uik_ids import parse_ids
 
 SLEEP_RANDOM_RANGE = (0, 2)
 
 
-def write_to_csv(pathname: str, all_uiks: list):
+def write_to_csv(pathname: Path, all_uiks: list):
 
     fieldnames = list(all_uiks[0].keys())
-    with open(pathname, 'w', encoding='utf-8', newline='') as csvfile:
+    with pathname.open('w', encoding='utf-8', newline='') as csvfile:
         writer = csv.DictWriter(csvfile,
                                 fieldnames=fieldnames,
                                 delimiter=',',
@@ -22,7 +23,18 @@ def write_to_csv(pathname: str, all_uiks: list):
             writer.writerow({field: uik[field] for field in fieldnames})
 
 
-def run(urls: list):
+def run(start_url: str = None,
+        out_dir: str = "out"):
+
+    if not start_url:
+        start_url = 'http://www.ivanovo.vybory.izbirkom.ru/region/ivanovo?action=ik'
+
+    out_dir = Path().cwd() / out_dir
+    if not out_dir.is_dir():
+        out_dir.mkdir()
+
+    urls = [f'{start_url}&vrn={i}' for i in parse_ids(start_url)]
+
     all_uiks = []
 
     for link in urls:
@@ -36,7 +48,7 @@ def run(urls: list):
 
     filename = time.strftime('%Y%m%d', time.localtime())
 
-    write_to_csv(f'./out/{filename}.csv', all_uiks)
+    write_to_csv(out_dir / f'uiks_{filename}.csv', all_uiks)
 
 
 if __name__ == "__main__":
