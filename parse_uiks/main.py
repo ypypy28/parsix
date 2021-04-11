@@ -24,7 +24,7 @@ def write_to_csv(pathname: Path, all_uiks: list):
 
 
 def run(start_url: str = None,
-        out_dir: str = "out"):
+        out_dir: str = "out_t"):
 
     if not start_url:
         start_url = 'http://www.ivanovo.vybory.izbirkom.ru/region/ivanovo?action=ik'
