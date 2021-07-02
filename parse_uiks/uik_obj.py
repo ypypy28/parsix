@@ -60,6 +60,12 @@ class Uik_obj:
         self._page = self._get_page(link)
         soup = BeautifulSoup(self._page, 'lxml')
         self.name = soup.find_all('h2')[1].text
+        # make uik's full name into short
+        # Участковая избирательная комиссия №X → УИК №X
+        if self.name[0] == 'У':
+            _, _, num = self.name.rpartition(' ')
+            self.name = f"УИК {num}"
+
         self.address = soup.find('span', {'id': 'address_ik'}).text
         if pre:=soup.find('span', {'id': 'address_voteroom'}):
             self.address_voteroom = pre.text
