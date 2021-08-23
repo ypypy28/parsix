@@ -35,11 +35,15 @@ def run(start_url: str = None,
 
     urls = [f'{start_url}&vrn={i}' for i in parse_ids(start_url)]
 
-    all_uiks = []
+    uiks, hqiks = [], []
 
     for link in urls:
         u = Uik_obj(link)
-        all_uiks.append(u)
+
+        if u.name[0] == 'У':
+            uiks.append(u)
+        else:
+            hqiks.append(u)
 
         sleep_time = randrange(*SLEEP_RANDOM_RANGE)
         print(f'working on {u.name}')
@@ -48,7 +52,8 @@ def run(start_url: str = None,
 
     filename = time.strftime('%Y%m%d', time.localtime())
 
-    write_to_csv(out_dir / f'uiks_{filename}.csv', all_uiks)
+    write_to_csv(out_dir / f'uiks_{filename}.csv', uiks)
+    write_to_csv(out_dir / f'hqiks_{filename}.csv', hqiks)
 
 
 if __name__ == "__main__":
