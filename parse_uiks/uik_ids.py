@@ -14,7 +14,7 @@ def get_src(url: str) -> str:
     arrows = driver.find_elements_by_class_name('jstree-ocl')[1:]
     for arrow in arrows:
         arrow.click()
-        sleep(0.5)
+        sleep(1)
 
     src = driver.page_source
     driver.quit()
