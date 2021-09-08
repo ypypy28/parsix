@@ -1,5 +1,6 @@
 ﻿import urllib.request
 from bs4 import BeautifulSoup
+from coords_helper import make_unique_coordinates
 
 
 class Uik_obj:
@@ -22,11 +23,14 @@ class Uik_obj:
 
     def _get_coords(self, s: BeautifulSoup) -> str:
 
-        if map_voteroom:=s.find('span', {'id': 'view_in_map_voteroom'}):
+        if map_voteroom := s.find('span', {'id': 'view_in_map_voteroom'}):
             lat = map_voteroom['coordlat']
             lon = map_voteroom['coordlon']
+
+            lat, lon = make_unique_coordinates(lat, lon)
             return f'{lat}, {lon}'
-        # return '(), ()'
+
+        return ''
 
     def _get_staff(self, s: BeautifulSoup) -> list:
 
@@ -67,7 +71,7 @@ class Uik_obj:
             self.name = f"УИК {num}"
 
         self.address = soup.find('span', {'id': 'address_ik'}).text
-        if pre:=soup.find('span', {'id': 'address_voteroom'}):
+        if pre := soup.find('span', {'id': 'address_voteroom'}):
             self.address_voteroom = pre.text
         self.coords = self._get_coords(soup)
         self._staff = self._get_staff(soup)
