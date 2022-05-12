@@ -1,4 +1,6 @@
-﻿import time
+﻿import sys
+import getopt
+import time
 import csv
 from pathlib import Path
 from random import randrange
@@ -23,17 +25,19 @@ def write_to_csv(pathname: Path, all_uiks: list):
             writer.writerow({field: uik[field] for field in fieldnames})
 
 
-def run(start_url: str = None,
-        out_dir: str = "out"):
+def run(start_url: str = None, out_dir: str = "out"):
 
     if not start_url:
-        start_url = 'http://www.ivanovo.vybory.izbirkom.ru/region/ivanovo?action=ik'
+        start_url = 'http://www.ivanovo.vybory.izbirkom.ru/region/pskov/?action=ik'
 
     out_dir = Path().cwd() / out_dir
     if not out_dir.is_dir():
         out_dir.mkdir()
 
     urls = [f'{start_url}&vrn={i}' for i in parse_ids(start_url)]
+    if not urls:
+        print("Parsing from site went wrong")
+        sys.exit(1)
 
     uiks, hqiks = [], []
 
@@ -57,9 +61,4 @@ def run(start_url: str = None,
 
 
 if __name__ == "__main__":
-    urls = []
-    all_uiks = []
-    with open('uiks.txt', encoding='utf-8') as uu:
-        urls = uu.read().split()
-
-    run(urls)
+    run()
