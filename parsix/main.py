@@ -1,13 +1,10 @@
 ﻿import sys
-import getopt
 import time
 import csv
 from pathlib import Path
 from random import randrange
 from uik_obj import Uik_obj
-from uik_ids import parse_ids
-
-SLEEP_RANDOM_RANGE = (0, 2)
+from uik_ids import parse_ids, SLEEP_RANDOM_RANGE
 
 
 def write_to_csv(pathname: Path, all_uiks: list):
@@ -25,22 +22,26 @@ def write_to_csv(pathname: Path, all_uiks: list):
             writer.writerow({field: uik[field] for field in fieldnames})
 
 
-def run(start_url: str = None, out_dir: str = "out"):
+def run(region: str = None, out_dir: str = "out"):
 
-    if not start_url:
-        start_url = 'http://www.ivanovo.vybory.izbirkom.ru/region/pskov/?action=ik'
+    if not region:
+        region = "ivanovo"
+
+    start_url = f'http://www.{region}.vybory.izbirkom.ru/region/{region}?action=ik'
 
     out_dir = Path().cwd() / out_dir
-    if not out_dir.is_dir():
-        out_dir.mkdir()
+    out_dir.mkdir(exist_ok=True)
 
-    urls = [f'{start_url}&vrn={i}' for i in parse_ids(start_url)]
+    urls = [f'{start_url}&vrn={i}' for i in parse_ids(url=start_url, out_dir=out_dir)]
     if not urls:
         print("Parsing from site went wrong")
         sys.exit(1)
 
     uiks, hqiks = [], []
 
+    print(f':: {len(urls)} election commisions in total\n'
+          'Parsing will complete in around'
+          f'{len(urls)*SLEEP_RANDOM_RANGE[1]//60} minutes')
     for link in urls:
         u = Uik_obj(link)
 
@@ -54,10 +55,15 @@ def run(start_url: str = None, out_dir: str = "out"):
         print(f'sleep for {sleep_time} seconds')
         time.sleep(sleep_time)
 
-    filename = time.strftime('%Y%m%d', time.localtime())
+    filename = f'{region}_{time.strftime('%Y%m%d', time.localtime())}'
 
     write_to_csv(out_dir / f'uiks_{filename}.csv', uiks)
     write_to_csv(out_dir / f'hqiks_{filename}.csv', hqiks)
+
+    # remove temporary files
+    for f in out_dir.iterdir():
+        if f.stem.startswith('tmp'):
+            f.unlink()
 
 
 if __name__ == "__main__":

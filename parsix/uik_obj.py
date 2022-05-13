@@ -1,6 +1,8 @@
-﻿import urllib.request
+﻿from urllib.request import urlopen, Request
 from bs4 import BeautifulSoup
 from coords_helper import make_unique_coordinates
+
+HEADERS = {'User-Agent': "Mozilla/5.0 (X11; Linux x86_64; rv:99.0) Gecko/20100101 Firefox/99.0"}
 
 
 class Uik_obj:
@@ -18,7 +20,7 @@ class Uik_obj:
     _staff = []
 
     def _get_page(self, link):
-        p = urllib.request.FancyURLopener({}).open(link).read()
+        p = urlopen(Request(link, headers=HEADERS)).read()
         return p.decode('cp1251').encode('utf-8')
 
     def _get_coords(self, s: BeautifulSoup) -> str:
@@ -27,8 +29,9 @@ class Uik_obj:
             lat = map_voteroom['coordlat']
             lon = map_voteroom['coordlon']
 
-            lat, lon = make_unique_coordinates(lat, lon)
-            return f'{lat}, {lon}'
+            if lat and lon:
+                lat, lon = make_unique_coordinates(lat, lon)
+                return f'{lat}, {lon}'
 
         return ''
 
