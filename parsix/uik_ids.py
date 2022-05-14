@@ -3,10 +3,10 @@ from re import findall
 from time import sleep
 from pathlib import Path
 from random import randrange
+from config import SLEEP_RANGE
 
 
 START_URL = 'http://www.ivanovo.vybory.izbirkom.ru/region/ivanovo?action=ik'
-SLEEP_RANDOM_RANGE = (2, 4)
 
 def get_src(url: str) -> str:
     driver = webdriver.Chrome()
@@ -15,7 +15,7 @@ def get_src(url: str) -> str:
     arrows = driver.find_elements_by_class_name('jstree-ocl')[1:]
     for arrow in arrows:
         arrow.click()
-        sleep(randrange(*SLEEP_RANDOM_RANGE))
+        sleep(randrange(*SLEEP_RANGE))
 
     src = driver.page_source
     driver.quit()

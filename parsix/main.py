@@ -4,7 +4,8 @@ import csv
 from pathlib import Path
 from random import randrange
 from uik_obj import Uik_obj
-from uik_ids import parse_ids, SLEEP_RANDOM_RANGE
+from uik_ids import parse_ids
+from config import SLEEP_RANGE
 
 
 def write_to_csv(pathname: Path, all_uiks: list):
@@ -37,11 +38,12 @@ def run(region: str = None, out_dir: str = "out"):
         print("Parsing from site went wrong")
         sys.exit(1)
 
-    uiks, hqiks = [], []
 
-    print(f':: {len(urls)} election commisions in total\n'
-          'Parsing will complete in around'
-          f'{len(urls)*SLEEP_RANDOM_RANGE[1]//60} minutes')
+    print(f':> {len(urls)} election commissions in total\n'
+          'Parsing will be completed in around '
+          f'{len(urls)*(SLEEP_RANGE[1]-1)//60} minutes')
+
+    uiks, hqiks = [], []
     for link in urls:
         u = Uik_obj(link)
 
@@ -50,15 +52,14 @@ def run(region: str = None, out_dir: str = "out"):
         else:
             hqiks.append(u)
 
-        sleep_time = randrange(*SLEEP_RANDOM_RANGE)
-        print(f'working on {u.name}')
-        print(f'sleep for {sleep_time} seconds')
+        sleep_time = randrange(*SLEEP_RANGE)
+        print(f'working on {u.name}, sleep for {sleep_time} seconds')
         time.sleep(sleep_time)
 
-    filename = f'{region}_{time.strftime('%Y%m%d', time.localtime())}'
+    today = time.strftime('%Y%m%d', time.localtime())
 
-    write_to_csv(out_dir / f'uiks_{filename}.csv', uiks)
-    write_to_csv(out_dir / f'hqiks_{filename}.csv', hqiks)
+    write_to_csv(out_dir / f'{region}_uiks_{today}.csv', uiks)
+    write_to_csv(out_dir / f'{region}_hqiks_{today}.csv', hqiks)
 
     # remove temporary files
     for f in out_dir.iterdir():
