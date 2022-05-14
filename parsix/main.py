@@ -23,17 +23,18 @@ def write_to_csv(pathname: Path, all_uiks: list):
             writer.writerow({field: uik[field] for field in fieldnames})
 
 
-def run(region: str = None, out_dir: str = "out"):
-
-    if not region:
-        region = "ivanovo"
+def run(region: str, out_dir: str = "out", show_chrome: bool = False):
 
     start_url = f'http://www.{region}.vybory.izbirkom.ru/region/{region}?action=ik'
 
     out_dir = Path().cwd() / out_dir
     out_dir.mkdir(exist_ok=True)
 
-    urls = [f'{start_url}&vrn={i}' for i in parse_ids(url=start_url, out_dir=out_dir)]
+    print("Parsing uik ids form the base page of the region. It may take a while.")
+    urls = [f'{start_url}&vrn={i}'
+            for i in parse_ids(url=start_url,
+                               out_dir=out_dir,
+                               show_chrome=show_chrome)]
     if not urls:
         print("Parsing from site went wrong")
         sys.exit(1)
@@ -53,7 +54,7 @@ def run(region: str = None, out_dir: str = "out"):
             hqiks.append(u)
 
         sleep_time = randrange(*SLEEP_RANGE)
-        print(f'working on {u.name}, sleep for {sleep_time} seconds')
+        print(f'working on {u.name}, sleeping for {sleep_time} seconds')
         time.sleep(sleep_time)
 
     today = time.strftime('%Y%m%d', time.localtime())

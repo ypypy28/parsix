@@ -8,8 +8,13 @@ from config import SLEEP_RANGE
 
 START_URL = 'http://www.ivanovo.vybory.izbirkom.ru/region/ivanovo?action=ik'
 
-def get_src(url: str) -> str:
-    driver = webdriver.Chrome()
+
+def get_src(url: str, show_chrome) -> str:
+    options = webdriver.chrome.options.Options()
+    if not show_chrome:
+        options.add_argument("--headless")
+
+    driver = webdriver.Chrome(options=options)
     driver.get(url)
 
     arrows = driver.find_elements_by_class_name('jstree-ocl')[1:]
@@ -23,17 +28,19 @@ def get_src(url: str) -> str:
     return src
 
 
-def parse_ids(url: str = START_URL, out_dir: Path=None) -> list:
+def parse_ids(url: str = START_URL,
+              out_dir: Path = None,
+              show_chrome: bool = False) -> list:
 
     src = ''
     if out_dir is None:
-        src = get_src(url)
+        src = get_src(url, show_chrome)
     else:
         tmp = out_dir.joinpath("tmp_base.html")
         if tmp.is_file():
             src = tmp.read_text(encoding='utf-8')
         else:
-            src = get_src(url)
+            src = get_src(url, show_chrome)
             out_dir.joinpath("tmp_base.html").write_text(src, encoding='utf-8')
 
     return findall('id="(\d+)"', src)
