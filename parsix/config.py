@@ -1,4 +1,5 @@
 OUTPUT_DIR_NAME = 'out'
+SHOW_CHROME = False
 SLEEP_RANGE = (2, 4)
 REGIONS = (
     "adygei", "altai-rep", "bashkortostan", "buriat", "dagestan", "ingush",
