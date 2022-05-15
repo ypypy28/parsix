@@ -1,7 +1,12 @@
 ﻿import argparse
 import main
 from config import REGIONS, OUTPUT_DIR_NAME, SHOW_CHROME
+from shutil import which
 
+
+if not which('chromedriver'):
+    print("You need to install chromedriver, "
+          "download it from here https://chromedriver.chromium.org/home")
 
 parser = argparse.ArgumentParser(
     prog="parsix",
