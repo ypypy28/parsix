@@ -1,9 +1,16 @@
 ﻿import argparse
 import main
+import signal
+import sys
 from config import REGIONS, OUTPUT_DIR_NAME, SHOW_CHROME
 from shutil import which
 
 
+def exit_gracefully(signal, frame):
+    print("\nProgram was interrupted")
+    sys.exit(1)
+
+signal.signal(signal.SIGINT, exit_gracefully)
 if not which('chromedriver'):
     print("You need to install chromedriver, "
           "download it from here https://chromedriver.chromium.org/home")
