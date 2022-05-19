@@ -1,4 +1,4 @@
-# Parsix - парсер избирательных комиссий.
+# Parsix – парсер избирательных комиссий
 
 A simple parser of Russian election commissions from the official website. Use it to get names of members and location of the election commissions in the chosen region of Russia.
 
