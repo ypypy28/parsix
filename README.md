@@ -56,5 +56,5 @@ python3 -m parsix --region=ivanovo
 ## Build 
 If you want to build a package, you can do it with a simple command
 ```sh
-pipenv build
+pipenv run build
 ```
