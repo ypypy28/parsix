@@ -1,4 +1,8 @@
 ﻿__pycache__
-*.lock
 out*/
+dist/
+build/
 .*
+*.bak
+*.egg-info
+

@@ -4,12 +4,18 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+setuptools = "*"
+build = "*"
 
 [packages]
 requests = "*"
 beautifulsoup4 = "*"
 lxml = "*"
 selenium = "*"
+parsix = {editable = true, path = "."}
 
 [requires]
 python_version = "3.10"
+
+[scripts]
+build = "python -m build"

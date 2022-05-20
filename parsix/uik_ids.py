@@ -3,7 +3,7 @@ from re import findall
 from time import sleep
 from pathlib import Path
 from random import randrange
-from config import SLEEP_RANGE
+from .config import SLEEP_RANGE
 
 
 START_URL = 'http://www.ivanovo.vybory.izbirkom.ru/region/ivanovo?action=ik'

@@ -3,9 +3,9 @@ import time
 import csv
 from pathlib import Path
 from random import randrange
-from uik_obj import Uik_obj
-from uik_ids import parse_ids
-from config import SLEEP_RANGE
+from .uik_obj import Uik_obj
+from .uik_ids import parse_ids
+from .config import SLEEP_RANGE
 
 
 def write_to_csv(pathname: Path, all_uiks: list):
@@ -23,6 +23,12 @@ def write_to_csv(pathname: Path, all_uiks: list):
             writer.writerow({field: uik[field] for field in fieldnames})
 
 
+def clean_workdir(wd: Path):
+    for f in wd.iterdir():
+        if f.stem.startswith('tmp'):
+            f.unlink()
+
+
 def run(region: str, out_dir: str = "out", show_chrome: bool = False):
 
     start_url = f'http://www.{region}.vybory.izbirkom.ru/region/{region}?action=ik'
@@ -37,6 +43,7 @@ def run(region: str, out_dir: str = "out", show_chrome: bool = False):
                                show_chrome=show_chrome)]
     if not urls:
         print("Parsing from site went wrong")
+        clean_workdir(out_dir)
         sys.exit(1)
 
 
@@ -63,9 +70,7 @@ def run(region: str, out_dir: str = "out", show_chrome: bool = False):
     write_to_csv(out_dir / f'{region}_hqiks_{today}.csv', hqiks)
 
     # remove temporary files
-    for f in out_dir.iterdir():
-        if f.stem.startswith('tmp'):
-            f.unlink()
+    clean_workdir(out_dir)
 
 
 if __name__ == "__main__":

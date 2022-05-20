@@ -2,13 +2,59 @@
 
 A simple parser of Russian election commissions from the official website. Use it to get names of members and location of the election commissions in the chosen region of Russia.
 
-To start using this parser You will have to install [chrome webdriver](https://chromedriver.chromium.org) if you don't already have it.
+To start using this parser you have to install [chrome webdriver](https://chromedriver.chromium.org) if you don't already have it.
 
-Example usage:
+## Usage 
+
+Simple usage:
 
 ```sh
-python3 parsix --region=ivanovo
+parsix --region=ivanovo
 ```
 
 
-By default, you will get the data in two separate CSV files inside the directory named _out_ in your current directory. You can pass an _--output-dir_ argument with the path to a specific directory for the output files. Each file will have current date as a part of the name, one file is for the data of precinct election commissions and another is for higher election commissions. You will be able to upload these CSV-files in the Google Maps.
+By default, you will get the data in two separate CSV files inside the directory named `out` in your current directory. You can pass an `--output-dir` argument with the path to a specific directory for the output files. Each file will have current date as a part of the name, one file is for the data of precinct election commissions and another is for higher election commissions. You will be able to upload these CSV-files in the Google Maps.
+
+
+## Installation
+To use it as a cli tool run this commands
+```sh
+git clone https://github.com/ypypy28/parsix.git
+cd parsix
+pip install . --user
+
+```
+
+
+## Installation for development
+
+1. Install [chrome webdriver](https://chromedriver.chromium.org).   
+2. Clone this project into your local directory of choice
+
+```sh
+git clone https://github.com/ypypy28/parsix.git
+cd parsix
+```
+3. install dependencies in virtual environment
+- with [pipenv](https://pipenv.pypa.io/en/latest/)
+
+```sh
+pipenv sync --dev
+```
+- or with out of box `pip`
+```sh
+python3 -m venv venv
+source ./venv/bin/activate
+pip install -r requirements.txt
+```
+
+4. Now you should be able to run parsix as a module from your virtual environment.  
+```sh
+python3 -m parsix --region=ivanovo
+```
+
+## Build 
+If you want to build a package, you can do it with a simple command
+```sh
+pipenv build
+```
