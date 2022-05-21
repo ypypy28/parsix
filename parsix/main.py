@@ -3,9 +3,9 @@ import time
 import csv
 from pathlib import Path
 from random import randrange
-from .uik_obj import Uik_obj
-from .uik_ids import parse_ids
-from .config import SLEEP_RANGE
+from parsix.uik_obj import Uik_obj
+from parsix.uik_ids import parse_ids
+from parsix.config import SLEEP_RANGE
 
 
 def write_to_csv(pathname: Path, all_uiks: list):

@@ -1,7 +1,7 @@
 ﻿import argparse
 import signal
 import sys
-from . import main
+from parsix import main
 from parsix.config import REGIONS, OUTPUT_DIR_NAME, SHOW_CHROME
 from shutil import which
 
