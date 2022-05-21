@@ -42,10 +42,12 @@ def run(region: str, out_dir: str = "out", show_chrome: bool = False):
                                out_dir=out_dir,
                                show_chrome=show_chrome)]
     if not urls:
-        print("Parsing from site went wrong")
+        print("Parsing from site went wrong. Maybe you were banned.",
+              "Or perhaps the election commissions site changed its structure.",
+              f"Try to open base link in your browser {start_url}",
+              sep='\n')
         clean_workdir(out_dir)
         sys.exit(1)
-
 
     print(f':> {len(urls)} election commissions in total\n'
           'Parsing will be completed in around '

@@ -1,4 +1,6 @@
-﻿from selenium import webdriver
+﻿import sys
+from selenium import webdriver
+from selenium.common.exceptions import WebDriverException
 from re import findall
 from time import sleep
 from pathlib import Path
@@ -9,13 +11,24 @@ from parsix.config import SLEEP_RANGE
 START_URL = 'http://www.ivanovo.vybory.izbirkom.ru/region/ivanovo?action=ik'
 
 
-def get_src(url: str, show_chrome) -> str:
+def get_src(url: str, show_chrome: bool) -> str:
     options = webdriver.chrome.options.Options()
     if not show_chrome:
         options.add_argument("--headless")
 
     driver = webdriver.Chrome(options=options)
-    driver.get(url)
+
+    try:
+        driver.get(url)
+    except WebDriverException as e:
+        print("\nSomething happend while parsing:",
+              url,
+              "Maybe you were banned.",
+              e.msg,
+              sep='\n')
+        driver.quit()
+        sys.exit(1)
+
 
     arrows = driver.find_elements_by_class_name('jstree-ocl')[1:]
     for arrow in arrows:

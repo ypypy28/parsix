@@ -1,4 +1,6 @@
-﻿from urllib.request import urlopen, Request
+﻿import sys
+from urllib.request import urlopen, Request
+from urllib.error import URLError
 from bs4 import BeautifulSoup
 from parsix.coords_helper import make_unique_coordinates
 
@@ -20,7 +22,15 @@ class Uik_obj:
     _staff = []
 
     def _get_page(self, link):
-        p = urlopen(Request(link, headers=HEADERS)).read()
+        try:
+            p = urlopen(Request(link, headers=HEADERS)).read()
+        except URLError as e:
+            print("\nSomething happend while trying to parse:",
+                  link,
+                  e.reason,
+                  sep='\n')
+            sys.exit(1)
+
         return p.decode('cp1251').encode('utf-8')
 
     def _get_coords(self, s: BeautifulSoup) -> str:
