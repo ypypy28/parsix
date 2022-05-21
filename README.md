@@ -41,11 +41,17 @@ cd parsix
 ```sh
 pipenv sync --dev
 ```
-- or with out of box `pip`
+- or with out of box `pip` on \*nix-systems
 ```sh
 python3 -m venv venv
 source ./venv/bin/activate
-pip install -r requirements.txt
+pip install -e .
+```
+- or with pip in powershell on windows
+```powershell
+python -m venv venv
+.\venv\Scripts\activate.ps1
+pip install -e .
 ```
 
 4. Now you should be able to run parsix as a module from your virtual environment.  
