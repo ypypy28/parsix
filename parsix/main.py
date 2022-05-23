@@ -37,7 +37,7 @@ def run(region: str, out_dir: str = "out", show_chrome: bool = False) -> None:
     out_dir = Path().cwd() / out_dir
     out_dir.mkdir(exist_ok=True)
 
-    print("Parsing uik ids form the base page of the region. It may take a while.")
+    print("Parsing ids of commissions form the base page of the region. It may take a while.")
     urls = [f'{start_url}&vrn={i}'
             for i in parse_ids(url=start_url,
                                out_dir=out_dir,
