@@ -6,16 +6,19 @@ verify_ssl = true
 [dev-packages]
 setuptools = "*"
 build = "*"
+pyinstaller = "*"
+parsix = {editable = true, path = "."}
 
 [packages]
 requests = "*"
 beautifulsoup4 = "*"
 lxml = "*"
 selenium = "*"
-parsix = {editable = true, path = "."}
 
 [requires]
 python_version = "3.10"
 
 [scripts]
 build = "python -m build"
+build-binary = "pyinstaller --clean --onefile --name parsix parsix/__main__.py"
+clean = "python -c 'import shutil; [shutil.rmtree(d, ignore_errors=True) for d in (\"__pycache__\", \"build\", \"parsix.egg-info\")]; shutil.os.unlink(\"parsix.spec\")'"
