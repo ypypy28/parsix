@@ -11,7 +11,7 @@ from parsix.election_commission import get_commission_from, Commission
 
 
 def write_to_csv(pathname: Path, election_commissions: list[Commission]) -> None:
-    fieldnames = list(election_commissions[0].keys())
+    fieldnames = list(asdict(election_commissions[0]).keys())
     with pathname.open('w', encoding='utf-8', newline='') as csvfile:
         writer = csv.DictWriter(csvfile,
                                 fieldnames=fieldnames,

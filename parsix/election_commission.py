@@ -26,9 +26,6 @@ class Commission:
     members: str = ''
     coords: str = ''
 
-    def keys(self):
-        return tuple(field.name for field in fields(self))
-
 
 def _get_page(link: str) -> str:
     try:
