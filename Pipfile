@@ -7,6 +7,7 @@ verify_ssl = true
 setuptools = "*"
 build = "*"
 pyinstaller = "*"
+pywin32-ctypes = "*"
 parsix = {editable = true, path = "."}
 
 [packages]
