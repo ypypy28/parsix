@@ -1,6 +1,6 @@
 # Parsix – парсер избирательных комиссий
 
-A simple parser of Russian election commissions from the official website. Use it to get names of members and location of the election commissions in the chosen region of Russia.
+A simple parser of Russian election commissions from the official website. Use it to get names of members and locations of the election commissions in the chosen region of Russia.
 
 To start using this parser you have to install [chrome webdriver](https://chromedriver.chromium.org) if you don't already have it.
 
