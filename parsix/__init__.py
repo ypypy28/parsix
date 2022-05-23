@@ -7,6 +7,5 @@ region of Russia.
 """
 
 __author__ = "Nikolai Diachkov"
-__version__ = "0.8.0"
+__version__ = "0.8.1"
 __license__ = "MIT"
-

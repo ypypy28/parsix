@@ -1,16 +1,17 @@
-﻿import sys
-import time
-import csv
+﻿from dataclasses import asdict
 from pathlib import Path
 from random import randrange
-from parsix.uik_obj import Uik_obj
-from parsix.uik_ids import parse_ids
+import csv
+import sys
+import time
+
 from parsix.config import SLEEP_RANGE
+from parsix.commissions_id_parser import parse_ids
+from parsix.election_commission import get_commission_from, Commission
 
 
-def write_to_csv(pathname: Path, all_uiks: list):
-
-    fieldnames = list(all_uiks[0].keys())
+def write_to_csv(pathname: Path, election_commissions: list[Commission]) -> None:
+    fieldnames = list(election_commissions[0].keys())
     with pathname.open('w', encoding='utf-8', newline='') as csvfile:
         writer = csv.DictWriter(csvfile,
                                 fieldnames=fieldnames,
@@ -19,17 +20,17 @@ def write_to_csv(pathname: Path, all_uiks: list):
                                 quoting=csv.QUOTE_ALL)
 
         writer.writeheader()
-        for uik in all_uiks:
-            writer.writerow({field: uik[field] for field in fieldnames})
+        for commission in election_commissions:
+            writer.writerow(asdict(commission))
 
 
-def clean_workdir(wd: Path):
+def clean_workdir(wd: Path) -> None:
     for f in wd.iterdir():
         if f.stem.startswith('tmp'):
             f.unlink()
 
 
-def run(region: str, out_dir: str = "out", show_chrome: bool = False):
+def run(region: str, out_dir: str = "out", show_chrome: bool = False) -> None:
 
     start_url = f'http://www.{region}.vybory.izbirkom.ru/region/{region}?action=ik'
 
@@ -55,15 +56,16 @@ def run(region: str, out_dir: str = "out", show_chrome: bool = False):
 
     uiks, hqiks = [], []
     for link in urls:
-        u = Uik_obj(link)
+        commission = get_commission_from(link)
+        print(f'Got the {commission.name}', end='')
 
-        if u.name[0] == 'У':
-            uiks.append(u)
+        if commission.name.startswith('У'):
+            uiks.append(commission)
         else:
-            hqiks.append(u)
+            hqiks.append(commission)
 
         sleep_time = randrange(*SLEEP_RANGE)
-        print(f'working on {u.name}, sleeping for {sleep_time} seconds')
+        print(f', sleeping for {sleep_time} seconds')
         time.sleep(sleep_time)
 
     today = time.strftime('%Y%m%d', time.localtime())

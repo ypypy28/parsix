@@ -1,10 +1,11 @@
-﻿import argparse
+﻿from shutil import which
+import argparse
 import signal
 import sys
+
 from parsix import __doc__ as description
 from parsix import main
 from parsix.config import REGIONS, OUTPUT_DIR_NAME, SHOW_CHROME
-from shutil import which
 
 
 def exit_gracefully(signal, frame):

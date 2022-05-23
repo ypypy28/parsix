@@ -1,10 +1,12 @@
-﻿import sys
-from selenium import webdriver
-from selenium.common.exceptions import WebDriverException
-from re import findall
-from time import sleep
+﻿from selenium import webdriver
+
 from pathlib import Path
 from random import randrange
+from re import findall
+from selenium.common.exceptions import WebDriverException
+from time import sleep
+import sys
+
 from parsix.config import SLEEP_RANGE
 
 
