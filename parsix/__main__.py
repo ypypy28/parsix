@@ -4,7 +4,7 @@ import signal
 import sys
 
 from parsix import __doc__ as description
-from parsix import main
+from parsix import main, __version__
 from parsix.config import REGIONS, OUTPUT_DIR_NAME, SHOW_CHROME
 
 
@@ -27,13 +27,17 @@ def start():
     )
     parser.add_argument("--output-dir", "-o", default=OUTPUT_DIR_NAME, nargs='?',
                         help="path to the directory where to put results")
+    parser.add_argument("--show-chrome", default=SHOW_CHROME, action="store_true",
+                        help="use to display Chrome window while parsing initial page")
+    parser.add_argument("--version", "-v", action="version",
+                        version=f'%(prog)s {__version__}')
     parser.add_argument("--region", "-r", required=True,
                         choices=REGIONS,
                         help="which regions to work with")
-    parser.add_argument("--show-chrome", default=SHOW_CHROME, action="store_true",
-                        help="use to display Chrome window while parsing initial page")
 
     args = parser.parse_args()
+
+    print(args)
 
     main.run(region=args.region,
              out_dir=args.output_dir,
