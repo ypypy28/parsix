@@ -54,7 +54,7 @@ python -m venv venv
 pip install -e .
 ```
 
-4. Now you should be able to run `parsix` as a module from your virtual environment.  
+4. Now you should be able to run `parsix` as a module from your virtual environment
 ```sh
 python3 -m parsix --region=ivanovo
 ```
