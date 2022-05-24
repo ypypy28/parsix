@@ -37,8 +37,6 @@ def start():
 
     args = parser.parse_args()
 
-    print(args)
-
     main.run(region=args.region,
              out_dir=args.output_dir,
              show_chrome=args.show_chrome)
