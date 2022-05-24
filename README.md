@@ -28,14 +28,14 @@ pip install . --user
 
 ## Installation for development
 
-1. Install [chrome webdriver](https://chromedriver.chromium.org).   
+1. Install [chrome webdriver](https://chromedriver.chromium.org) (and Chrome or Chromium web browser if you don't already have it)
 2. Clone this project into your local directory of choice
 
 ```sh
 git clone https://github.com/ypypy28/parsix.git
 cd parsix
 ```
-3. install dependencies in virtual environment
+3. Install dependencies in virtual environment
 - with [pipenv](https://pipenv.pypa.io/en/latest/)
 
 ```sh
@@ -47,16 +47,21 @@ python3 -m venv venv
 source ./venv/bin/activate
 pip install -e .
 ```
-- or with pip in powershell on windows
+- or with `pip` in powershell on windows
 ```powershell
 python -m venv venv
 .\venv\Scripts\activate.ps1
 pip install -e .
 ```
 
-4. Now you should be able to run parsix as a module from your virtual environment.  
+4. Now you should be able to run `parsix` as a module from your virtual environment.  
 ```sh
 python3 -m parsix --region=ivanovo
+```
+
+or like a regular cli application because of the installation in editable mode
+```sh
+parsix --region=ivanovo
 ```
 
 ## Build 
