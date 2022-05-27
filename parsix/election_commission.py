@@ -1,15 +1,12 @@
 ﻿from bs4 import BeautifulSoup
 
-from dataclasses import dataclass, fields
+from dataclasses import dataclass
 from urllib.error import URLError
 from urllib.request import urlopen, Request
 import sys
 
 from parsix.coords_helper import make_unique_coordinates
-
-
-_HEADERS = {'User-Agent':
-            "Mozilla/5.0 (X11; Linux x86_64; rv:99.0) Gecko/20100101 Firefox/99.0"}
+from prasix.config import HEADERS
 
 
 @dataclass(slots=True)
@@ -29,7 +26,7 @@ class Commission:
 
 def _get_page(link: str) -> str:
     try:
-        p = urlopen(Request(link, headers=_HEADERS)).read()
+        p = urlopen(Request(link, headers=HEADERS)).read()
     except URLError as e:
         print("\nSomething happend while trying to parse:",
               link,
@@ -72,7 +69,6 @@ def _get_coords(s: BeautifulSoup) -> str:
     return ''
 
 
-# TODO make simplier
 def _build_name_organization(member: tuple[str]) -> str:
     return ', '.join(member)
 

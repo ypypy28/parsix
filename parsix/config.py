@@ -4,10 +4,10 @@ SLEEP_RANGE = (2, 4)
 REGIONS = (
     "adygei", "altai-rep", "bashkortostan", "buriat", "dagestan", "ingush",
     "kabardin-balkar", "kalmyk", "karachaev-cherkess", "karel", "komi",
-    "mari-el", "mordov", "yakut", "n-osset-alania","tatarstan", "tyva",
+    "mari-el", "mordov", "yakut", "n-osset-alania", "tatarstan", "tyva",
     "udmurt", "khakas", "chechen", "chuvash", "altai-terr", "zabkray",
     "kamchatka-krai", "krasnodar", "krasnoyarsk", "permkrai", "primorsk",
-    "stavropol", "khabarovsk","amur", "arkhangelsk", "zabkray",
+    "stavropol", "khabarovsk", "amur", "arkhangelsk", "zabkray",
     "kamchatka-krai", "krasnodar", "krasnoyarsk", "permkrai", "primorsk",
     "stavropol", "khabarovsk", "amur", "arkhangelsk", "astrakhan", "belgorod",
     "bryansk", "vladimir", "volgograd", "vologod", "voronezh", "ivanovo",
@@ -19,3 +19,6 @@ REGIONS = (
     "ulyanovsk", "chelyabinsk", "yaroslavl", "moscow-city", "st-petersburg",
     "jewish-aut", "nenetsk", "hmao", "chukot", "yamal-nenetsk", "sirius"
 )
+
+HEADERS = {"User-Agent":
+           "Mozilla/5.0 (X11; Linux x86_64; rv:99.0) Gecko/20100101 Firefox/99.0"}
