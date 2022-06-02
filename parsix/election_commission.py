@@ -6,7 +6,7 @@ from urllib.request import urlopen, Request
 import sys
 
 from parsix.coords_helper import make_unique_coordinates
-from prasix.config import HEADERS
+from parsix.config import HEADERS
 
 
 @dataclass(slots=True)
@@ -48,7 +48,7 @@ def _get_staff(s: BeautifulSoup) -> dict[str, str | list[dict[str, str]]]:
             name = tds[1].text
             position = tds[2].text
             org_from = tds[3].text
-            if position == 'Член':
+            if position.lower().startswith('член'):
                 persons['Член'].append((name, org_from))
             else:
                 persons[position] = (name, org_from)
